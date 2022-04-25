@@ -1,1 +1,10 @@
 <h1>DETALLES DEL PARTIDO</h1>
+
+<div class="buttons">
+    <a href="/matches" class="btn btn-dark">Volver a lista de partidos</a>
+    <a href="/matches/match-details/{{id}}/edit" class="btn btn-dark">Editar partido</a>
+    <form action="/matches/match-details/{{id}}/delete" method="POST">
+        <button type="submit" class="btn btn-warning">Eliminar</button>
+    </form>
+
+</div>
