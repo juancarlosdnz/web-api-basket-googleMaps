@@ -1,1 +1,19 @@
-<h1>LISTA DE PARTIDOS</h1>
+<div class="container">
+
+    <h1>Partidos disponibles</h1>
+
+    <hr>
+
+    {{#each matches}}
+    <p>{{startTime}}</p>
+    <p>{{endTime}}</p>
+
+    <div class="buttons">
+        <a href="/matches/match-details/{{id}}" class="btn btn-dark">Ver detalles de partido</a>
+    </div>
+    <hr>
+    {{/each}}
+
+
+
+</div>

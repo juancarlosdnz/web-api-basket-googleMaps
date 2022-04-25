@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const User = require('./../models/User.model')
 const Match = require('./../models/Match.model')
+const { default: mongoose } = require('mongoose')
 
 
 // All matches list
@@ -18,7 +19,7 @@ router.get('/', (req, res, next) => {
 
 // Match detail
 
-router.get('//match-details/:id', (req, res, next) => {
+router.get('/match-details/:id', (req, res, next) => {
 
     const { id } = req.params
 
@@ -26,7 +27,7 @@ router.get('//match-details/:id', (req, res, next) => {
         .findById(id)
         .populate('players')
         .then(match => {
-            res.render('match/match-detail', movie)
+            res.render('match/match-detail', match)
         })
         .catch(err => console.log(err))
 })
@@ -40,7 +41,11 @@ router.get('/create', (req, res, next) => {
 
 router.post('/create', (req, res, next) => {
 
-    const { organizer, startTime, endTime, players, winner, opened, location } = req.body
+    const { organizer = req.session.currentUser._id, startTime, endTime, players, winner, opened, lat, lng } = req.body
+    const location = {
+        type: 'Point',
+        coordinates: [lat, lng]
+    }
 
     Match
         .create({ organizer, startTime, endTime, players, winner, opened, location })
@@ -60,7 +65,7 @@ router.post('/match-details/:id/delete', (req, res, next) => {
     Match
         .findByIdAndDelete(id)
         .then(() => {
-            res.redirect('/')
+            res.redirect('/matches')
         })
         .catch(err => console.log(err))
 })
@@ -81,8 +86,24 @@ router.get('/match-details/:id/edit', (req, res, next) => {
         .catch(err => console.log(err))
 })
 
-router.post('/match-details/:id/edit', (req, res, next) => {
+// router.post('/match-details/:id/edit', (req, res, next) => {
 
+// })
+
+// Player joining a match
+
+router.post('/:id/join', (req, res, next) => {
+
+    const { players } = req.body
+    const { id } = req.params
+    players = Mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
+
+    Match
+        .findById(id)
+        .update({ $push: { players } })
+        .then(() => {
+            res.redirect('/matches/match-details/:id')
+        })
 })
 
 
