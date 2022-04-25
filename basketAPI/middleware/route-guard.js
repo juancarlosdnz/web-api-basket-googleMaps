@@ -13,4 +13,4 @@ const checkRole = (...rolesToCheck) => (req, res, next) => {
         res.render('auth/login', { errorMessage: 'No tienes permisos' })
     }
 }
-module.exports = { isLoggedIn, checkRole }
+module.exports = { isLoggedIn,isLoggedOut, checkRole }
