@@ -75,18 +75,14 @@ router.get('/match-details/:id/edit', (req, res, next) => {
         .findById(id)
         .populate('players')
         .then(match => {
-            User
-                .find()
-                .then(players => {
-                    res.render('match/match-edit', {match, players})
-                })
-                .catch(err => console.log(err))
+            res.render('match/match-edit', { match })
+
         })
         .catch(err => console.log(err))
 })
 
 router.post('/match-details/:id/edit', (req, res, next) => {
-    
+
 })
 
 
