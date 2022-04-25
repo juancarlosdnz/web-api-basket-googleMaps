@@ -7,7 +7,7 @@ const matchSchema = new Schema(
         endTime: Date,
         players: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         winner: { type: Schema.Types.ObjectId, ref: 'User' },
-        opened: { type: Boolean, default: true},
+        opened: { type: Boolean, default: true },
         location: {
             type: {
                 type: String
