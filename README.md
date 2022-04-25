@@ -11,10 +11,10 @@
 | POST          | /profile/:id/edit                   | `El rol de admin puede acceder y editar dicho usuario`   |
 | POST          | /profile/:id/delete                 | `El rol de admin puede acceder y borrar dicho usuario`   |
 | GET           | /matches                            | `Lista completa de partidos disponibles`   |
-| POST          | /matches/:id/join                   | `El usuario se une al match deseado`   |
-| POST          | /matches/:id/drop-out               | `El usuario se desapunta de un partido`   |
+| POST          | /matches/match-details/:id/join     | `El usuario se une al match deseado`   |
+| POST          | /matches/match-details/:id/drop-out | `El usuario se desapunta de un partido`   |
 | POST          | /matches/create                     | `Crea un partido`   |
-| GET           | /matches/match-details              | `Ver los detalles de un partido` |
+| GET           | /matches/match-details/:id          | `Ver los detalles de un partido` |
 | POST          | /matches/match-details/:id/delete   | `El organizador o admin puede eliminar el partido seleccionado`  |
 | POST          | /matches/match-details/:id/edit     | `El organizador o admin puede editar el partido seleccionado`  |
 | GET           | /leaderboard                        | `Número de victorias ordenadas por usuario` |
