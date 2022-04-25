@@ -13,7 +13,8 @@ const userSchema = new Schema(
       type: String,
       enum: ['PLAYER', 'ORGANIZER', 'ADMIN'],
       default: 'PLAYER'
-    }
+    },
+    comments:[String]
   },
   {
     timestamps: true

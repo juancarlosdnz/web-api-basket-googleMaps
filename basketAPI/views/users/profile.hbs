@@ -1,0 +1,24 @@
+{{#with user}}
+<div class="container">
+    <h1>Pefil de {{username}}</h1>
+
+    <p>Email: {{email}}</p>
+    <figure>
+        <img src={{profileImg}} alt="Imagen de perfil de {{username}}">
+    </figure>
+    <p>Estatus: {{role}}</p>
+    <p>Número de teléfono: {{phoneNumber}}</p>
+    {{#each comments}}
+    <p>Comentario: {{this}}</p>
+
+    {{/each}}
+
+    <form action="/users/{{id}}/comment" method="POST">
+        <textarea name="comments" id="comments" cols="30" rows="10"></textarea>
+        <div >
+            <button type="submit" class="btn btn-dark block">Comentar</button>
+        </div>
+    </form>
+
+</div>
+{{/with}}

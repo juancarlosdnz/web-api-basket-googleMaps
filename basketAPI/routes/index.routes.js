@@ -10,5 +10,8 @@ router.get("/", (req, res, next) => {
 
 router.use('/matches', require('./matches.routes')) 
 router.use('/', require('./auth.routes'))
+router.use('/profile',require('./profile.routes'))
+router.use('/users', require('./users.routes'))
+
 
 module.exports = router;
