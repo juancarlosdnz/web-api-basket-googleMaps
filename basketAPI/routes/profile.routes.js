@@ -2,10 +2,11 @@ const router = require('express').Router()
 
 const User = require('./../models/User.model')
 const Match = require('./../models/Match.model')
+const { isLoggedIn, isLoggedOut, checkRole } = require('../middleware/route-guard')
 
 //LOAD PROFILE PAGE
 
-router.get('/', (req, res, next) => {
+router.get('/', isLoggedOut,(req, res, next) => {
 
     const loggedId = req.session.currentUser._id
     const isAdmin = req.session.currentUser.role === 'ADMIN'
@@ -19,7 +20,7 @@ router.get('/', (req, res, next) => {
 
 //LOAD USER EDIT PAGE
 
-router.get('/:id/edit', (req, res, next) => {
+router.get('/:id/edit',(req, res, next) => {
 
     const { id } = req.params
     User
@@ -32,7 +33,7 @@ router.get('/:id/edit', (req, res, next) => {
 
 //EDIT USER
 
-router.post('/:id/edit', (req, res, next) => {
+router.post('/:id/edit',  (req, res, next) => {
 
     const { id } = req.params
     const { username, email, phoneNumber, profileImg } = req.body

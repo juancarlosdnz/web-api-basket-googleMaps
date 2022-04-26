@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const mongoose = require('mongoose');
 const User = require('./../models/User.model')
-const Comment = require('./../models/Comments.model')
-const Match = require('./../models/Match.model')
+
+const { isLoggedIn,isLoggedOut, checkRole } = require('../middleware/route-guard')
 
 
 //GET ALL USERS
-router.get('/', (req, res, next) => {
+router.get('/', isLoggedOut,(req, res, next) => {
 
     User
         .find()
@@ -18,46 +18,34 @@ router.get('/', (req, res, next) => {
 
 
 //GET USERS PROFILE
-router.get('/:id', (req, res, next) => {
+router.get('/:id', isLoggedOut, (req, res, next) => {
     let data = {}
     const { id } = req.params
-    const objectId = mongoose.Types.ObjectId(req.params);
     User
         .findById(id)
+        .populate('comments')
         .then(user => {
-            data.user = user
-            return Comment.find()
-        })
-        .then(comments => {
-            const currentReceiverId = mongoose.Types.ObjectId(req.params)
-            comments.forEach(elem=>{
-                if (comments.receiver == currentReceiverId) {
-                    data.commentsOnProfile = elem
-                    console.log('------------------COMENTARIOS DE ESTE PERFIL---------------'+ data.commentsOnProfile)
-                }
-            })
-            
-            res.render('users/profile', data)
+            res.render('users/profile',user)
         })
         .catch(err => console.log(err))
 })
 
 //COMMENT POST
 
-router.post('/:id/comment', (req, res, next) => {
-    const objectId = mongoose.Types.ObjectId(req.params);
-    const {
-        comment,
-        owner = req.session.currentUser._id,
-        receiver = objectId
-    } = req.body
+// router.post('/:id/comment', (req, res, next) => {
 
-    Comment
-        .create({ comment, owner, receiver })
-        .then(() => {
-            res.redirect('/')
-        })
-        .catch(err => console.log(err))
-})
+//     const objectId = mongoose.Types.ObjectId(req.params);
+//     const {
+//         comment,
+//         owner = objectId,
+//     } = req.body
+
+//     Comment
+//         .create({ comment, owner })
+//         .then(() => {
+//             res.redirect('/users')
+//         })
+//         .catch(err => console.log(err))
+// })
 
 module.exports = router

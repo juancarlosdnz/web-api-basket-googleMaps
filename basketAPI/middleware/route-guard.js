@@ -1,16 +1,27 @@
 const isLoggedIn = (req, res, next) => {
-    !req.session.currentUser ? res.render('auth/login', { errorMessage: 'Desautorizado' }) : next()
+    if (req.session.currentUser) {
+        res.redirect('/')
+    }
+    else {
+        next()
+    }
 }
 
 const isLoggedOut = (req, res, next) => {
-    req.session.currentUser ? res.redirect('/') : next()
+    if (req.session.currentUser == null) {
+        res.redirect('/login')
+    }
+    else{
+        next()
+    }
 }
 
 const checkRole = (...rolesToCheck) => (req, res, next) => {
     if (rolesToCheck.includes(req.session.currentUser.role)) {
         next()
-    } else {
+    }
+    else {
         res.render('auth/login', { errorMessage: 'No tienes permisos' })
     }
 }
-module.exports = { isLoggedIn,isLoggedOut, checkRole }
+module.exports = { isLoggedIn, isLoggedOut, checkRole }

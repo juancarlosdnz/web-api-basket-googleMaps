@@ -4,10 +4,13 @@ const User = require('./../models/User.model')
 const Match = require('./../models/Match.model')
 const { default: mongoose } = require('mongoose')
 
+const { isLoggedOut,checkRole, isLoggedIn } = require("../middleware/route-guard")
+
+
 
 // All matches list
 
-router.get('/', (req, res, next) => {
+router.get('/',isLoggedOut, (req, res, next) => {
 
     Match
         .find()
@@ -35,7 +38,7 @@ router.get('/match-details/:id', (req, res, next) => {
 
 // Create match
 
-router.get('/create', (req, res, next) => {
+router.get('/create',isLoggedOut,checkRole('ORGANIZER') ,(req, res, next) => {
     res.render('match/match-create')
 })
 

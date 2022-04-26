@@ -1,5 +1,4 @@
 <div class="container">
-    {{#with user}}
     <h1>Pefil de {{username}}</h1>
     <p>Email: {{email}}</p>
     <figure>
@@ -7,11 +6,10 @@
     </figure>
     <p>Estatus: {{role}}</p>
     <p>Número de teléfono: {{phoneNumber}}</p>
-    {{/with}}
-    {{#each commentsOnProfile}}
-    <p>-{{comment}}</p>
+    {{#each comments}}
+    <p>-{{this}}</p>
     {{/each}}
-    <form action="/users/{{user._id}}/comment" method="POST">
+    <form action="/users/{{id}}/comment" method="POST">
         <textarea name="comment" id="comment" cols="50" rows="10"></textarea>
         <div>
             <button type="submit" class="btn btn-dark block">Comentar</button>

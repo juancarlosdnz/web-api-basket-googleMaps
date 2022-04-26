@@ -3,12 +3,12 @@ const bcryptjs = require('bcryptjs')
 const User = require("../models/User.model")
 const saltRounds = 10
 
-const {isLoggedOut}=require("../middleware/route-guard")
+const {isLoggedIn}=require("../middleware/route-guard")
 
 // Signup
-router.get('/register', (req, res, next) => res.render('auth/sign-up'))
+router.get('/register',isLoggedIn ,(req, res, next) => res.render('auth/sign-up'))
 
-router.post('/register', (req, res, next) => {
+router.post('/register', isLoggedIn, (req, res, next) => {
 
     const { username, email, plainPassword,profileImg,phoneNumber} = req.body
 
@@ -23,7 +23,7 @@ router.post('/register', (req, res, next) => {
 
 
 // Login
-router.get('/login', (req, res, next) => res.render('auth/login'))
+router.get('/login', isLoggedIn,(req, res, next) => res.render('auth/login'))
 router.post('/login', (req, res, next) => {
 
     const { email, plainPassword } = req.body
@@ -48,7 +48,7 @@ router.post('/login', (req, res, next) => {
 
 // Logout
 router.post('/logout', (req, res, next) => {
-    req.session.destroy(() => res.redirect('/iniciar-sesion'))
+    req.session.destroy(() => res.redirect('/'))
 })
 
 module.exports = router
