@@ -10,3 +10,12 @@ a {
 h1 {
   color: 15px;
 }
+
+#myMap {
+  width: 550px;
+}
+
+#myMarkerMap {
+  background-color: red;
+  width: 550px;
+}
