@@ -18,12 +18,14 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Latitud:</label>
-                    <input type="text" class="form-control" name="lat">
+                    <input type="text" class="form-control" id="lat" name="lat">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Longitud:</label>
-                    <input type="text" class="form-control" name="lng">
+                    <input type="text" class="form-control" id="lng" name="lng">
                 </div>
+
+                <figure id="myMap" style="height: 600px;"></figure>
 
                 <button type="submit" class="btn btn-dark">Crear</button>
             </form>
@@ -34,6 +36,9 @@
 
         </div>
     </div>
-
-
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/matches-map.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTfrEJjFOyJQ3p3WbSYP0yNoasqELJNFY&callback=initMap"></script>

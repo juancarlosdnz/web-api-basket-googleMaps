@@ -92,11 +92,11 @@ router.get('/match-details/:id/edit', (req, res, next) => {
 
 // Player joining a match
 
-router.post('/:id/join', (req, res, next) => {
+router.post('match-details/:id/join', (req, res, next) => {
 
     const { players } = req.body
     const { id } = req.params
-    players = Mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
+    // players = Mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
 
     Match
         .findById(id)

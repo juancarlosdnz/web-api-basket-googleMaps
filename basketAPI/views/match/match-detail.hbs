@@ -1,5 +1,13 @@
 <h1>DETALLES DEL PARTIDO</h1>
 
+<p>{{startTime}}</p>
+<p>{{endTime}}</p>
+<p hidden id="currentMatchLat">{{location.coordinates.[0]}}</p>
+<p hidden id="currentMatchLng">{{location.coordinates.[1]}}</p>
+
+
+<figure id="myMarkerMap" style="height: 600px;"></figure>
+
 <div class="buttons">
     <a href="/matches" class="btn btn-dark">Volver a lista de partidos</a>
     <a href="/matches/match-details/{{id}}/edit" class="btn btn-dark">Editar partido</a>
@@ -8,3 +16,9 @@
     </form>
 
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/marker-map.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTfrEJjFOyJQ3p3WbSYP0yNoasqELJNFY&callback=initMarkerMap"></script>
