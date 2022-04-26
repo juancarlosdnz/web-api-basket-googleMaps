@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema,model}=require('mongoose')
 const matchSchema = new Schema(
     {
         organizer: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -21,6 +20,4 @@ const matchSchema = new Schema(
 );
 
 matchSchema.index({ location: '2dsphere' })
-
-const Match = mongoose.model('Match', matchSchema);
-module.exports = Match;
+module.exports = model('Match', matchSchema)
