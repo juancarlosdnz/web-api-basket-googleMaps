@@ -4,11 +4,6 @@ const User = require('./../models/User.model')
 const Comment = require('./../models/Comments.model')
 const { isLoggedOut } = require('../middleware/route-guard')
 
-
-const { isLoggedOut } = require('../middleware/route-guard')
-
-
-//GET ALL USERS
 router.get('/', isLoggedOut, (req, res, next) => {
 
     User

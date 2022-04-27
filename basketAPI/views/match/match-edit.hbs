@@ -7,7 +7,7 @@
             <hr>
 
             <form action="/matches/match-details/{{id}}/edit" method="POST">
-
+                {{#with match}}
                 <div class="mb-3">
                     <label for="startTime" class="form-label">Inicio del partido</label>
                     <input type="datetime-local" class="form-control" id="startTime" name="startTime" value="{{date1}}"
@@ -18,18 +18,22 @@
                     <input type="datetime-local" class="form-control" id="endTime" name="endTime" value="{{date2}}"
                         required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label class="form-label">Latitud:</label>
                     <input type="text" class="form-control" id="lat" name="lat"
                         value="{{match.location.coordinates.[0]}}" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label class="form-label">Longitud:</label>
                     <input type="text" class="form-control" id="lng" name="lng"
                         value="{{match.location.coordinates.[1]}}" required>
                 </div>
+                <div>
+                    <p>Selecciona la nueva ubicación del partido:</p>
 
-                <figure id="myMap" style="height: 600px;"></figure>
+                    <figure id="myMap" style="height: 600px;"></figure>
+
+                </div>
 
                 <button type="submit" class="btn btn-dark">Editar</button>
             </form>
@@ -41,6 +45,7 @@
         </div>
     </div>
 </div>
+{{/with}}
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/matches-map.js"></script>

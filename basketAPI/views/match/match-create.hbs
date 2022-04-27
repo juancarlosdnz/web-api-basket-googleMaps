@@ -16,16 +16,20 @@
                     <label for="endTime" class="form-label">Finalización del partido</label>
                     <input type="datetime-local" class="form-control" id="endTime" name="endTime" value="" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label class="form-label">Latitud:</label>
                     <input type="text" class="form-control" id="lat" name="lat">
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label class="form-label">Longitud:</label>
                     <input type="text" class="form-control" id="lng" name="lng">
                 </div>
+                <div>
 
-                <figure id="myMap" style="height: 600px;"></figure>
+                    <p>Selecciona la ubicación del partido:</p>
+                    <figure id="myMap"></figure>
+
+                </div>
 
                 <button type="submit" class="btn btn-dark">Crear</button>
             </form>

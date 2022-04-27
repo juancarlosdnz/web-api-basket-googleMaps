@@ -15,7 +15,7 @@ router.post('/register', isLoggedIn, (req, res, next) => {
         .genSalt(saltRounds)
         .then(salt => bcryptjs.hash(plainPassword, salt))
         .then(hashedPassword => User.create({ username, email, profileImg, phoneNumber, password: hashedPassword }))
-        .then(() => res.redirect('/'))
+        .then(() => res.redirect('/login'))
         .catch(error => next(error));
 })
 
@@ -35,7 +35,7 @@ router.post('/login', (req, res, next) => {
                 return
             } else {
                 req.session.currentUser = user
-                res.redirect('/')
+                res.redirect('/profile')
             }
         })
         .catch(error => next(error))

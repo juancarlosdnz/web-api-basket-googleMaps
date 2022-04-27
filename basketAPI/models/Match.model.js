@@ -6,7 +6,6 @@ const matchSchema = new Schema(
         endTime: Date,
         teamA: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         teamB: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-      
         opened: { type: Boolean, default: true },
         location: {
             type: {
