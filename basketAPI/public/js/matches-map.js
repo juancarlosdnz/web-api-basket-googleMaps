@@ -25,9 +25,8 @@ function selectMatchPlace() {
     google.maps.event.addListener(map, 'click', function (event) {
         centerLat = document.getElementById("lat").value = event.latLng.lat();
         centerLng = document.getElementById("lng").value = event.latLng.lng();
-        marker = placeMatchMarkers(centerLat,centerLng)
-    });
-
+        placeMatchMarkers(centerLat,centerLng)
+    })
 }
 
 function placeMatchMarkers(centerLat,centerLng) {
@@ -44,16 +43,16 @@ function placeMatchMarkers(centerLat,centerLng) {
 
 function setMapOnAll(map) {
     for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
+        markers[i].setMap(map)
     }
 }
 
 function hideMarkers() {
-    setMapOnAll(null);
+    setMapOnAll(null)
 }
 
 function deleteMarkers() {
-    hideMarkers();
-    markers = [];
+    hideMarkers()
+    markers = []
 }
 

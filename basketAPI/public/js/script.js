@@ -4,4 +4,4 @@ document.addEventListener(
     console.log("basketAPI JS imported successfully!");
   },
   false
-);
+)

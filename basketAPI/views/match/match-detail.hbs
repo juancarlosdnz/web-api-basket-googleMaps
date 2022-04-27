@@ -2,6 +2,14 @@
 
 <p>{{startTime}}</p>
 <p>{{endTime}}</p>
+<p>TEAM A</p>
+{{#each teamA}}
+<p>{{username}}</p>
+{{/each}}
+<p>TEAM B</p>
+{{#each teamB}}
+<p>{{username}}</p>
+{{/each}}
 <p hidden id="currentMatchLat">{{location.coordinates.[0]}}</p>
 <p hidden id="currentMatchLng">{{location.coordinates.[1]}}</p>
 
@@ -13,6 +21,12 @@
     <a href="/matches/match-details/{{id}}/edit" class="btn btn-dark">Editar partido</a>
     <form action="/matches/match-details/{{id}}/delete" method="POST">
         <button type="submit" class="btn btn-warning">Eliminar</button>
+    </form>
+    <form action="/matches/match-details/{{id}}/joinTeamA" method="POST">
+        <button type="submit" class="btn btn-warning">JOIN TEAM A</button>
+    </form>
+    <form action="/matches/match-details/{{id}}/joinTeamB" method="POST">
+        <button type="submit" class="btn btn-warning">JOIN TEAM B</button>
     </form>
 
 </div>

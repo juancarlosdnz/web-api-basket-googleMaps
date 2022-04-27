@@ -5,9 +5,9 @@ const hbs = require("hbs");
 const app = express()
 require('./config')(app)
 require('./config/session.config')(app)
-const capitalized = require("./utils/capitalized");
+const capitalized = require("./utils/roles");
 const projectName = "basketAPI";
-app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
+app.locals.appTitle = `${projectName} created with IronLauncher`;
 const index = require("./routes/index.routes");
 app.use("/", index);
 require("./error-handling")(app);

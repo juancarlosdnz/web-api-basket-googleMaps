@@ -28,7 +28,8 @@ router.get('/match-details/:id', (req, res, next) => {
 
     Match
         .findById(id)
-        .populate('players')
+        .populate('teamA')
+        .populate('teamB')
         .then(match => {
             res.render('match/match-detail', match)
         })
@@ -81,7 +82,8 @@ router.get('/match-details/:id/edit', (req, res, next) => {
 
     Match
         .findById(id)
-        .populate('players')
+        .populate('teamA')
+        .populate('teamB')
         .then(match => {
             res.render('match/match-edit', { match })
 
@@ -95,18 +97,36 @@ router.get('/match-details/:id/edit', (req, res, next) => {
 
 // Player joining a match
 
-router.post('match-details/:id/join', (req, res, next) => {
+router.post('/match-details/:id/joinTeamA', (req, res, next) => {
 
-    const { players } = req.body
+    let { players } = req.body
     const { id } = req.params
-    // players = Mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
+    players = mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
 
     Match
         .findById(id)
-        .update({ $push: { players } })
+        .update({ $addToSet: { teamA:players } })
         .then(() => {
-            res.redirect('/matches/match-details/:id')
+            res.redirect('/matches')
         })
+        .catch(err => console.log(err))
+
+})
+
+router.post('/match-details/:id/joinTeamB', (req, res, next) => {
+
+    let { players } = req.body
+    const { id } = req.params
+    players = mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
+
+    Match
+        .findById(id)
+        .update({ $addToSet: { teamB: players } })
+        .then(() => {
+            res.redirect('/matches')
+        })
+        .catch(err => console.log(err))
+
 })
 
 
