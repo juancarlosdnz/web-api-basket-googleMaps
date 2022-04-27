@@ -11,13 +11,11 @@
     {{#each comments}}
     <p>{{comment}}</p>
     <p>Autor: {{author.username}}</p>
-    {{#if ../isCurrentCommenter}}
     <form action="/users/{{user._id}}/comment/{{this._id}}/delete" method="POST">
         <div>
             <button type="submit" class="btn btn-dark block">ELIMINAR COMENTARIO</button>
         </div>
     </form>
-    {{/if}}
     <hr>
     {{/each}}
     <form action="/users/{{user._id}}/comment" method="POST">

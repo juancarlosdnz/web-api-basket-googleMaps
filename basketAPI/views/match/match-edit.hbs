@@ -6,26 +6,30 @@
 
             <hr>
 
-            <form action="/matches/create" method="POST">
+            <form action="/matches/match-details/{{id}}/edit" method="POST">
 
                 <div class="mb-3">
                     <label for="startTime" class="form-label">Inicio del partido</label>
-                    <input type="datetime-local" class="form-control" id="startTime" name="startTime"
-                        value="{{startTime}}" required>
+                    <input type="datetime-local" class="form-control" id="startTime" name="startTime" value="{{date1}}"
+                        required>
                 </div>
                 <div class="mb-3">
                     <label for="endTime" class="form-label">Finalización del partido</label>
-                    <input type="datetime-local" class="form-control" id="endTime" name="endTime" value="{{endTime}}"
+                    <input type="datetime-local" class="form-control" id="endTime" name="endTime" value="{{date2}}"
                         required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Latitud:</label>
-                    <input type="text" class="form-control" name="lat" value="{{location.coordinates.[0]}}">
+                    <input type="text" class="form-control" id="lat" name="lat"
+                        value="{{match.location.coordinates.[0]}}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Longitud:</label>
-                    <input type="text" class="form-control" name="lng" value="{{location.coordinates.[1]}}">
+                    <input type="text" class="form-control" id="lng" name="lng"
+                        value="{{match.location.coordinates.[1]}}" required>
                 </div>
+
+                <figure id="myMap" style="height: 600px;"></figure>
 
                 <button type="submit" class="btn btn-dark">Editar</button>
             </form>
@@ -36,6 +40,9 @@
 
         </div>
     </div>
-
-
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/matches-map.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTfrEJjFOyJQ3p3WbSYP0yNoasqELJNFY&callback=initMap"></script>

@@ -1,13 +1,6 @@
 let map
-let centerLat
-let centerLng
-centerLat = document.getElementById('currentMatchLat').innerHTML
-centerLng = document.getElementById('currentMatchLng').innerHTML
-centerLat = centerLat * 1
-centerLng = centerLng * 1
-
-console.log(centerLat)
-console.log(centerLng)
+let centerLat = (document.getElementById('currentMatchLat').innerHTML) * 1
+let centerLng = (document.getElementById('currentMatchLng').innerHTML) * 1
 
 function initMarkerMap() {
     drawMap()
@@ -26,32 +19,8 @@ function drawMap() {
     )
 }
 
-// function getMatches() {
-
-//     axios.get('/api/matches')
-//         .then(({ data }) => placeMatchMarkers(data))
-//         .catch(err => console.log(err))
-// }
-
-// function placeMatchMarkers(matches) {
-//     const { Marker } = google.maps
-
-//     matches.forEach(match => {
-
-//         const position = {
-//             lat: match.location.coordinates[0],
-//             lng: match.location.coordinates[1],
-//         }
-
-//         new Marker({ position, map })
-//     })
-// }
-
-
-
 function placeMatchMarkers() {
     const { Marker } = google.maps
-
 
     const position = {
         lat: centerLat,
