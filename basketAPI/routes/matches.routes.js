@@ -128,25 +128,14 @@ router.post('/match-details/:id/markWinnersA', (req, res, next) => {
 
     const { id } = req.params
 
-    // Match
-    //     .findById(id)
-    //     .then(match => {
-    //         let id = match.teamA[0]._id
-    //         return User.findByIdAndUpdate(id, { $inc: { wins: 1 } })
-    //     })
-    //     .then((user) => {
-    //         res.redirect('/matches')
-    //     })
-
     Match
         .findById(id)
         .then(match => {
             teamAPlayers = match.teamA
             return User.find({ teamAPlayers }).updateMany({ $inc: { wins: 1 } })
-            //return User.findByIdAndUpdate(ids, { $inc: { wins: 1 } })
         })
-        .then((user) => {
-            
+        .then(() => {
+            res.redirect('/matches')
         })
 
 
