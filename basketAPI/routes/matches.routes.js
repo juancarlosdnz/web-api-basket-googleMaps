@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const User = require('./../models/User.model')
 const Match = require('./../models/Match.model')
+const mongoose = require('mongoose');
 const { isLoggedOut, checkRole } = require("../middleware/route-guard")
 const formatDate = require('./../utils/formatDate')
 

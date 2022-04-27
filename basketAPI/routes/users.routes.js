@@ -5,9 +5,7 @@ const Comment = require('./../models/Comments.model')
 const { isLoggedOut } = require('../middleware/route-guard')
 
 
-const { isLoggedIn, isLoggedOut, checkRole } = require('../middleware/route-guard')
-const { isAdmin } = require('../utils/roles')
-
+const { isLoggedOut } = require('../middleware/route-guard')
 
 
 //GET ALL USERS
@@ -24,7 +22,6 @@ router.get('/', isLoggedOut, (req, res, next) => {
 router.get('/:id', isLoggedOut, (req, res, next) => {
 
     const { id } = req.params
-    const currentUserId = req.session.currentUser._id
     const userPromise = User.findById(id)
     const commentPromise = Comment.find({ user: id }).populate('author')
 
