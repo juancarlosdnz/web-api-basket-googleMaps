@@ -6,10 +6,16 @@
 {{#each teamA}}
 <p>{{username}}</p>
 {{/each}}
+<form action="/matches/match-details/{{id}}/markWinnersA" method="POST">
+    <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
+</form>
 <p>TEAM B</p>
 {{#each teamB}}
 <p>{{username}}</p>
 {{/each}}
+<form action="xxxxxx" method="POST">
+    <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
+</form>
 <p hidden id="currentMatchLat">{{location.coordinates.[0]}}</p>
 <p hidden id="currentMatchLng">{{location.coordinates.[1]}}</p>
 

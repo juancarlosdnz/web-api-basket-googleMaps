@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const Match = require('./../models/Match.model')
+const User = require('./../models/User.model')
+
 const mongoose = require('mongoose');
 const { isLoggedOut, checkRole } = require("../middleware/route-guard")
 const formatDate = require('./../utils/formatDate')
@@ -23,6 +25,7 @@ router.get('/match-details/:id', (req, res, next) => {
         .populate('teamA')
         .populate('teamB')
         .then(match => {
+            console.log('------------------------TEAM A: ' + match.teamA)
             res.render('match/match-detail', match)
         })
         .catch(err => console.log(err))
@@ -96,7 +99,7 @@ router.post('/match-details/:id/joinTeamA', (req, res, next) => {
 
     Match
         .findById(id)
-        .update({ $addToSet: { teamA:players } })
+        .update({ $addToSet: { teamA: players } })
         .then(() => {
             res.redirect('/matches')
         })
@@ -119,5 +122,36 @@ router.post('/match-details/:id/joinTeamB', (req, res, next) => {
         .catch(err => console.log(err))
 
 })
+
+router.post('/match-details/:id/markWinnersA', (req, res, next) => {
+
+
+    const { id } = req.params
+
+    // Match
+    //     .findById(id)
+    //     .then(match => {
+    //         let id = match.teamA[0]._id
+    //         return User.findByIdAndUpdate(id, { $inc: { wins: 1 } })
+    //     })
+    //     .then((user) => {
+    //         res.redirect('/matches')
+    //     })
+
+    Match
+        .findById(id)
+        .then(match => {
+            teamAPlayers = match.teamA
+            return User.find({ teamAPlayers }).updateMany({ $inc: { wins: 1 } })
+            //return User.findByIdAndUpdate(ids, { $inc: { wins: 1 } })
+        })
+        .then((user) => {
+            
+        })
+
+
+
+})
+
 
 module.exports = router
