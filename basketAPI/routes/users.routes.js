@@ -30,12 +30,9 @@ router.get('/:id', isLoggedOut, (req, res, next) => {
     Promise
         .all([userPromise, commentPromise])
         .then(([user, comments]) => {
-            let isCurrentCommenter
-            comments.forEach(element => {
-                isCurrentCommenter= currentUserId ===element.author.id
-            });
-             
-            res.render('users/profile', { user, comments, isCurrentCommenter })
+                 
+            res.render('users/profile', { user, comments})
+            
         })
         .catch(err => console.log(err))
 })

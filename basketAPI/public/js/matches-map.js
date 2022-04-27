@@ -1,14 +1,16 @@
 let map
+let markers = []
+let centerLat
+let centerLng
 
 function initMap() {
     drawMap()
     selectMatchPlace()
-    // printMatchesMarker()
-
+    placeMatchMarkers()
 }
 
 function drawMap() {
-    const { Map } = google.maps
+    const { Map,Marker } = google.maps
 
     map = new Map(
         document.getElementById('myMap'),
@@ -19,35 +21,39 @@ function drawMap() {
     )
 }
 
-
-
 function selectMatchPlace() {
     google.maps.event.addListener(map, 'click', function (event) {
-        document.getElementById("lat").value = event.latLng.lat();
-        document.getElementById("lng").value = event.latLng.lng();
-        marker.setPosition(event.latLng);
+        centerLat = document.getElementById("lat").value = event.latLng.lat();
+        centerLng = document.getElementById("lng").value = event.latLng.lng();
+        marker = placeMatchMarkers(centerLat,centerLng)
     });
 
 }
 
-// function getMatch(match) {
+function placeMatchMarkers(centerLat,centerLng) {
+    deleteMarkers()
 
-// }
+    const { Marker } = google.maps
+    const position = {
+        lat: centerLat * 1,
+        lng: centerLng * 1,
+    }
 
+    markers.push(new Marker({ position, map }))
+}
 
+function setMapOnAll(map) {
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
+}
 
-// function printMatchesMarker() {
+function hideMarkers() {
+    setMapOnAll(null);
+}
 
-//     const { Marker } = google.maps
-
-//     const position = {
-
-//         lat: document.getElementById("lat").value,
-//         lng: document.getElementById("lng").value
-//     }
-
-//     console.log(position.lat, position.lng)
-//     new Marker({ position, map })
-// }
-
+function deleteMarkers() {
+    hideMarkers();
+    markers = [];
+}
 
