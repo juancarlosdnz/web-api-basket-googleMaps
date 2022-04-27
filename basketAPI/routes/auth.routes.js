@@ -3,27 +3,23 @@ const bcryptjs = require('bcryptjs')
 const User = require("../models/User.model")
 const saltRounds = 10
 
-const {isLoggedIn}=require("../middleware/route-guard")
+const { isLoggedIn } = require("../middleware/route-guard")
 
-// Signup
-router.get('/register',isLoggedIn ,(req, res, next) => res.render('auth/sign-up'))
+router.get('/register', isLoggedIn, (req, res, next) => res.render('auth/sign-up'))
 
 router.post('/register', isLoggedIn, (req, res, next) => {
 
-    const { username, email, plainPassword,profileImg,phoneNumber} = req.body
+    const { username, email, plainPassword, profileImg, phoneNumber } = req.body
 
     bcryptjs
         .genSalt(saltRounds)
         .then(salt => bcryptjs.hash(plainPassword, salt))
-        .then(hashedPassword => User.create({ username, email,profileImg,phoneNumber, password: hashedPassword }))
+        .then(hashedPassword => User.create({ username, email, profileImg, phoneNumber, password: hashedPassword }))
         .then(() => res.redirect('/'))
         .catch(error => next(error));
 })
 
-
-
-// Login
-router.get('/login', isLoggedIn,(req, res, next) => res.render('auth/login'))
+router.get('/login', isLoggedIn, (req, res, next) => res.render('auth/login'))
 router.post('/login', (req, res, next) => {
 
     const { email, plainPassword } = req.body
@@ -45,8 +41,6 @@ router.post('/login', (req, res, next) => {
         .catch(error => next(error))
 })
 
-
-// Logout
 router.post('/logout', (req, res, next) => {
     req.session.destroy(() => res.redirect('/'))
 })

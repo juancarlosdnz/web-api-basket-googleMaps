@@ -1,6 +1,6 @@
 let map
-let centerLat = (document.getElementById('currentMatchLat').innerHTML)*1
-let centerLng = (document.getElementById('currentMatchLng').innerHTML)*1
+let centerLat = (document.getElementById('currentMatchLat').innerHTML) * 1
+let centerLng = (document.getElementById('currentMatchLng').innerHTML) * 1
 
 
 function initMarkerMap() {
@@ -22,7 +22,6 @@ function drawMap() {
 
 function placeMatchMarkers() {
     const { Marker } = google.maps
-
 
     const position = {
         lat: centerLat,
