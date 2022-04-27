@@ -1,15 +1,26 @@
 <div class="container">
-    <h1>Pefil de {{username}}</h1>
-    <p>Email: {{email}}</p>
+    <h1>Pefil de {{user.username}}</h1>
+    <p>Email: {{user.email}}</p>
     <figure>
-        <img src={{profileImg}} alt="Imagen de perfil de {{username}}">
+        <img src={{user.profileImg}} alt="Imagen de perfil de {{user.username}}">
     </figure>
     <p>Estatus: {{role}}</p>
-    <p>Número de teléfono: {{phoneNumber}}</p>
+    <p>Número de teléfono: {{user.phoneNumber}}</p>
+    <h3>Comentarios</h3>
+    <hr>
     {{#each comments}}
-    <p>-{{this}}</p>
+    <p>{{comment}}</p>
+    <p>Autor: {{author.username}}</p>
+    {{#if ../isCurrentCommenter}}
+    <form action="/users/{{user._id}}/comment/{{this._id}}/delete" method="POST">
+        <div>
+            <button type="submit" class="btn btn-dark block">ELIMINAR COMENTARIO</button>
+        </div>
+    </form>
+    {{/if}}
+    <hr>
     {{/each}}
-    <form action="/users/{{id}}/comment" method="POST">
+    <form action="/users/{{user._id}}/comment" method="POST">
         <textarea name="comment" id="comment" cols="50" rows="10"></textarea>
         <div>
             <button type="submit" class="btn btn-dark block">Comentar</button>

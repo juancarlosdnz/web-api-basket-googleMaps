@@ -2,7 +2,8 @@ const { Schema, model } = require('mongoose')
 const commentsSchema = new Schema(
     {
         comment: String,
-        owner: { type: Schema.Types.ObjectId, ref: 'User' },
+        author: { type: Schema.Types.ObjectId, ref: 'User' },
+        user: { type: Schema.Types.ObjectId, ref: 'User' }
     },
     {
         timestamps: true
