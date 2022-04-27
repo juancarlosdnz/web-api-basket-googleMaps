@@ -1,41 +1,61 @@
-<h1>DETALLES DEL PARTIDO</h1>
+<div class="container">
 
-<p>{{startTime}}</p>
-<p>{{endTime}}</p>
-<p>TEAM A</p>
-{{#each teamA}}
-<p>{{username}}</p>
-{{/each}}
-<form action="/matches/match-details/{{id}}/markWinnersA" method="POST">
-    <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
-</form>
-<p>TEAM B</p>
-{{#each teamB}}
-<p>{{username}}</p>
-{{/each}}
-<form action="xxxxxx" method="POST">
-    <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
-</form>
-<p hidden id="currentMatchLat">{{location.coordinates.[0]}}</p>
-<p hidden id="currentMatchLng">{{location.coordinates.[1]}}</p>
+    <div class="row">
+
+        <div class="col-md-6">
+            <h1>Detalles del partido</h1>
+            <p>{{date1}}</p>
+            <p>{{date2}}</p>
+            {{#with match}}
+            <p>Partido organizado por: <a href="/users/{{organizer.id}}">{{organizer.username}}</a></p>
+            <h3>Equipos:</h3>
+            <div class="teams">
+                <p>TEAM A</p>
+                <form action="/matches/match-details/{{id}}/markWinnersA" method="POST">
+                    <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
+                </form>
+                <form action="/matches/match-details/{{id}}/joinTeamA" method="POST">
+                    <button type="submit" class="btn btn-warning">Unirse a Team A</button>
+                </form>
+            </div>
+
+            {{#each teamA}}
+            <p><a href="/users/{{id}}">{{username}}</a></p>
+            {{/each}}
+            <div class="teams">
+                <p>TEAM B</p>
+                <form action="/matches/match-details/{{id}}/joinTeamB" method="POST">
+                    <button type="submit" class="btn btn-warning">Unirse a Team B</button>
+                </form>
+            </div>
+            {{#each teamB}}
+            <p><a href="/users/{{id}}">{{username}}</a></p>
+            {{/each}}
+            <p hidden id="currentMatchLat">{{location.coordinates.[0]}}</p>
+            <p hidden id="currentMatchLng">{{location.coordinates.[1]}}</p>
+        </div>
 
 
-<figure id="myMarkerMap" style="height: 600px;"></figure>
+        <div class="col-md-6">
 
-<div class="buttons">
-    <a href="/matches" class="btn btn-dark">Volver a lista de partidos</a>
-    <a href="/matches/match-details/{{id}}/edit" class="btn btn-dark">Editar partido</a>
-    <form action="/matches/match-details/{{id}}/delete" method="POST">
-        <button type="submit" class="btn btn-warning">Eliminar</button>
-    </form>
-    <form action="/matches/match-details/{{id}}/joinTeamA" method="POST">
-        <button type="submit" class="btn btn-warning">JOIN TEAM A</button>
-    </form>
-    <form action="/matches/match-details/{{id}}/joinTeamB" method="POST">
-        <button type="submit" class="btn btn-warning">JOIN TEAM B</button>
-    </form>
+            <figure id="myMarkerMap"></figure>
+
+        </div>
+
+    </div>
+
+    <div class="buttons">
+        <a href="/matches" class="btn btn-dark">Volver a lista de partidos</a>
+        <a href="/matches/match-details/{{id}}/edit" class="btn btn-dark">Editar partido</a>
+        <form action="/matches/match-details/{{id}}/delete" method="POST">
+            <button type="submit" class="btn btn-warning">Eliminar</button>
+        </form>
+    </div>
 
 </div>
+{{/with}}
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

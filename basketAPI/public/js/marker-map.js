@@ -2,7 +2,6 @@ let map
 let centerLat = (document.getElementById('currentMatchLat').innerHTML) * 1
 let centerLng = (document.getElementById('currentMatchLng').innerHTML) * 1
 
-
 function initMarkerMap() {
     drawMap()
     placeMatchMarkers()

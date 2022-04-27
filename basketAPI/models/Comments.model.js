@@ -10,5 +10,4 @@ const commentsSchema = new Schema(
     }
 );
 
-
 module.exports = model('Comments', commentsSchema)

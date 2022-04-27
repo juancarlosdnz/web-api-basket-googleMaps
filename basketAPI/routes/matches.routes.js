@@ -11,7 +11,12 @@ router.get('/', isLoggedOut, (req, res, next) => {
     Match
         .find()
         .then(matches => {
-            res.render('match/match-list', { matches })
+            matches.forEach(match => {
+                date1 = formatDate(match.startTime.toISOString())
+                date2 = formatDate(match.endTime.toISOString())
+            })
+            res.render('match/match-list', { matches, date1, date2 })
+
         })
         .catch(err => console.log(err))
 })
@@ -24,9 +29,11 @@ router.get('/match-details/:id', (req, res, next) => {
         .findById(id)
         .populate('teamA')
         .populate('teamB')
+        .populate('organizer')
         .then(match => {
-            console.log('------------------------TEAM A: ' + match.teamA)
-            res.render('match/match-detail', match)
+            date1 = formatDate(match.startTime.toISOString())
+            date2 = formatDate(match.endTime.toISOString())
+            res.render('match/match-detail', { match, date1, date2 })
         })
         .catch(err => console.log(err))
 })
@@ -43,7 +50,7 @@ router.post('/create', (req, res, next) => {
     Match
         .create({ organizer, startTime, endTime, players, winner, opened, location })
         .then(() => {
-            res.redirect('/')
+            res.redirect('/matches')
         })
         .catch(err => console.log(err))
 })
@@ -69,7 +76,6 @@ router.get('/match-details/:id/edit', (req, res, next) => {
         .populate('teamA')
         .populate('teamB')
         .then(match => {
-
             date1 = formatDate(match.startTime.toISOString())
             date2 = formatDate(match.endTime.toISOString())
             res.render('match/match-edit', { match, date1, date2 })
@@ -128,22 +134,12 @@ router.post('/match-details/:id/markWinnersA', (req, res, next) => {
 
     const { id } = req.params
 
-    // Match
-    //     .findById(id)
-    //     .then(match => {
-    //         let id = match.teamA[0]._id
-    //         return User.findByIdAndUpdate(id, { $inc: { wins: 1 } })
-    //     })
-    //     .then((user) => {
-    //         res.redirect('/matches')
-    //     })
 
     Match
         .findById(id)
         .then(match => {
             teamAPlayers = match.teamA
             return User.find({ teamAPlayers }).updateMany({ $inc: { wins: 1 } })
-            //return User.findByIdAndUpdate(ids, { $inc: { wins: 1 } })
         })
         .then((user) => {
             
