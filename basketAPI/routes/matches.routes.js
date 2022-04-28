@@ -136,17 +136,64 @@ router.post('/match-details/:id/markWinnersA', (req, res, next) => {
 
     Match
         .findById(id)
-        .then(match => {
-            teamAPlayers = match.teamA
-            return User.find({ teamAPlayers }).updateMany({ $inc: { wins: 1 } })
+        .then(({ teamA }) => {
+
+            const playersIncrement = teamA.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { wins: 1 } }))
+            return Promise.all(playersIncrement)
         })
-        .then(() => {
-            res.redirect('/matches')
-        })
+        .then(res.redirect('/matches'))
+        .catch(err => console.log(err))
+
+})
+router.post('/match-details/:id/markWinnersB', (req, res, next) => {
 
 
+    const { id } = req.params
+
+    Match
+        .findById(id)
+        .then(({ teamB }) => {
+
+            const playersIncrement = teamB.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { wins: 1 } }))
+            return Promise.all(playersIncrement)
+        })
+        .then(res.redirect('/matches'))
+        .catch(err => console.log(err))
 
 })
 
+// router.post('/match-details/:id/markLosersA', (req, res, next) => {
+
+
+//     const { id } = req.params
+//     let teamAPlayers
+
+//     Match
+//         .findById(id)
+//         .then(match => {
+//             teamAPlayers = match.teamA
+//             return User.find({ teamAPlayers }).updateMany({ $inc: { loses: 1 } })
+//         })
+//         .then(() => {
+//             res.redirect('/matches')
+//         })
+// })
+
+// router.post('/match-details/:id/markLosersB', (req, res, next) => {
+
+
+//     const { id } = req.params
+//     let teamBPlayers
+
+//     Match
+//         .findById(id)
+//         .then(match => {
+//             teamBPlayers = match.teamB
+//             return User.find({ teamBPlayers }).updateMany({ $inc: { loses: 1 } })
+//         })
+//         .then(() => {
+//             res.redirect('/matches')
+//         })
+// })
 
 module.exports = router

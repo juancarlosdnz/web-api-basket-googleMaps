@@ -10,7 +10,7 @@ const userSchema = new Schema(
     profileImg: { type: String, default: 'https://i.stack.imgur.com/l60Hf.png' },
     phoneNumber: String,
     wins: { type: Number, default:0 },
-    loses:Number,
+    loses: { type: Number, default: 0 },
     role: {
       type: String,
       enum: ['PLAYER', 'ORGANIZER', 'ADMIN'],
