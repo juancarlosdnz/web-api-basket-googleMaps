@@ -12,16 +12,22 @@
 
             <p>Estatus: {{role}}</p>
             <p>Número de teléfono: {{phoneNumber}}</p>
-
+            <p>Mis partidos:</p>
+            <ul>
+                {{#each myMatches}}
+                <li><a href="/matches/match-details/{{this._id}}">{{this.startTime}}</a></li>
+                {{/each}}
+            </ul>
             {{#if ../isAdmin}}
             <form action="/profile/{{id}}/delete" method="POST">
                 <button class="nav-link">Borrar</button>
             </form>
             {{/if}}
 
-            <button class="nav-link"><a href="profile/{{id}}/edit">Editar perfil</a></button>
         </div>
     </div>
+
+    <button class="nav-link"><a href="profile/{{id}}/edit">Editar perfil</a></button>
 
 
 

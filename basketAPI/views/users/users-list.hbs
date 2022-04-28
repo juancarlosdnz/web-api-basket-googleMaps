@@ -4,8 +4,14 @@
 
     {{#each user}}
     <h3>{{username}}</h3>
-    <button class="nav-link"><a href="users/{{id}}">PERFIL</a></button>
+    <button class="nav-link"><a href="users/{{id}}">Perfil</a></button>
+    {{#if ../isAdmin}}
+    <form action="/users/{{id}}/delete" method="POST">
+        <button class="nav-link">Borrar</button>
+    </form>
+    {{/if}}
     <hr>
+
     {{/each}}
 
 </div>

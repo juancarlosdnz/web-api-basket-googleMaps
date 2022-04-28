@@ -10,6 +10,7 @@ router.get('/', isLoggedOut, (req, res, next) => {
 
     User
         .findById(loggedId)
+        .populate('myMatches')
         .then(user => {
             res.render('profile/profile', { user, isAdmin })
         })

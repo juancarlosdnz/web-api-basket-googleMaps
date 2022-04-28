@@ -43,7 +43,7 @@ router.get('/match-details/:id', (req, res, next) => {
         .catch(err => console.log(err))
 })
 
-router.get('/create', isLoggedOut, checkRole('ORGANIZER', 'ADMIN'), (req, res, next) => {
+router.get('/create', isLoggedOut, checkRole("ORGANIZER", "ADMIN"), (req, res, next) => {
     res.render('match/match-create')
 })
 
@@ -66,6 +66,8 @@ router.post('/match-details/:id/delete', (req, res, next) => {
 
     Match
         .findByIdAndDelete(id)
+        .then(() => {
+        })
         .then(() => {
             res.redirect('/matches')
         })
@@ -106,13 +108,17 @@ router.post('/match-details/:id/edit', (req, res, next) => {
 
 router.post('/match-details/:id/joinTeamA', (req, res, next) => {
 
-    let { players } = req.body
+    let { playerId } = req.body
     const { id } = req.params
-    players = mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
+    playerId = req.session.currentUser._id
 
     Match
         .findById(id)
-        .update({ $addToSet: { teamA: players } })
+        .update({ $push: { teamA: playerId } })
+        .then(() => {
+            const promise1 = [User.findByIdAndUpdate(playerId, { $addToSet: { myMatches: id } })]
+            Promise.all(promise1)
+        })
         .then(() => {
             res.redirect('/matches')
         })
@@ -122,13 +128,17 @@ router.post('/match-details/:id/joinTeamA', (req, res, next) => {
 
 router.post('/match-details/:id/joinTeamB', (req, res, next) => {
 
-    let { players } = req.body
+    let { playerId } = req.body
     const { id } = req.params
-    players = mongoose.Types.ObjectId(`${req.session.currentUser._id}`)
+    playerId = req.session.currentUser._id
 
     Match
         .findById(id)
-        .update({ $addToSet: { teamB: players } })
+        .update({ $push: { teamB: playerId } })
+        .then(() => {
+            const promise1 = [User.findByIdAndUpdate(playerId, { $addToSet: { myMatches: id } })]
+            Promise.all(promise1)
+        })
         .then(() => {
             res.redirect('/matches')
         })

@@ -6,10 +6,13 @@ const { isLoggedOut } = require('../middleware/route-guard')
 
 router.get('/', isLoggedOut, (req, res, next) => {
 
+    const isAdmin = req.session.currentUser.role === 'ADMIN'
+
+
     User
         .find()
         .then(user => {
-            res.render('users/users-list', { user })
+            res.render('users/users-list', { user, isAdmin })
         })
         .catch(err => console.log(err))
 })
@@ -33,6 +36,21 @@ router.get('/:id', isLoggedOut, (req, res, next) => {
         .catch(err => console.log(err))
 })
 
+router.post('/:id/delete', (req, res, next) => {
+
+    const { id } = req.params
+
+    User
+        .findByIdAndDelete(id)
+        .then(() => {
+            res.redirect('/users')
+        })
+        .catch(err => console.log(err))
+})
+
+
+
+
 router.post('/:id/comment', (req, res, next) => {
 
     const objectId = mongoose.Types.ObjectId(req.params);
@@ -41,7 +59,7 @@ router.post('/:id/comment', (req, res, next) => {
     Comment
         .create({ comment, user, author })
         .then(() => {
-            res.redirect('/users')
+            res.redirect(`/users/${objectId}`)
         })
         .catch(err => console.log(err))
 })
@@ -49,11 +67,12 @@ router.post('/:id/comment', (req, res, next) => {
 router.post('/:id/comment/:ide/delete', (req, res, next) => {
 
     const { ide } = req.params
+    const { id } = req.params
 
     Comment
         .findByIdAndDelete(ide)
         .then(() => {
-            res.redirect('/users')
+            res.redirect(`/users/${id}`)
         })
         .catch(err => console.log(err))
 })
