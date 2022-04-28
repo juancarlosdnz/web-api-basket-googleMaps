@@ -9,7 +9,8 @@ const userSchema = new Schema(
     password: String,
     profileImg: { type: String, default: 'https://i.stack.imgur.com/l60Hf.png' },
     phoneNumber: String,
-    wins: { type: Number, default:0 },
+    myMatches: [{ type: Schema.Types.ObjectId, ref: 'Match' }],
+    wins: { type: Number, default: 0 },
     loses: { type: Number, default: 0 },
     role: {
       type: String,
