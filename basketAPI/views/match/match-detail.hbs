@@ -13,7 +13,7 @@
                 <p>TEAM A</p>
                 {{#if ../isOrganizer}}
                 <form action="/matches/match-details/{{id}}/markWinnersA" method="POST">
-                    <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
+                    <button type="submit" class="btn btn-warning">MARK AS WINNER A</button>
                 </form>
                 {{/if}}
                 <form action="/matches/match-details/{{id}}/joinTeamA" method="POST">
@@ -26,6 +26,9 @@
             {{/each}}
             <div class="teams">
                 <p>TEAM B</p>
+                <form action="/matches/match-details/{{id}}/markWinnersB" method="POST">
+                    <button type="submit" class="btn btn-warning">MARK AS WINNER B</button>
+                </form>
                 <form action="/matches/match-details/{{id}}/joinTeamB" method="POST">
                     <button type="submit" class="btn btn-warning">Unirse a Team B</button>
                 </form>
