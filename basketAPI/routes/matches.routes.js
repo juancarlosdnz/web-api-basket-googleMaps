@@ -6,13 +6,12 @@ const { isLoggedOut, checkRole } = require("../middleware/route-guard")
 const formatDate = require('./../utils/formatDate')
 
 router.get('/', isLoggedOut, (req, res, next) => {
-    let startTimes = []
-    let endTimes = []
+    
     Match
         .find()
         .then(matches => {
       
-            res.render('match/match-list', { matches, date1, date2 })
+            res.render('match/match-list', { matches })
 
         })
         .catch(err => console.log(err))
