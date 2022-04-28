@@ -6,17 +6,12 @@ const { isLoggedOut, checkRole } = require("../middleware/route-guard")
 const formatDate = require('./../utils/formatDate')
 
 router.get('/', isLoggedOut, (req, res, next) => {
-
+    let startTimes = []
+    let endTimes = []
     Match
         .find()
         .then(matches => {
-            matches.forEach(match => {
-                date1 = formatDate(match.startTime.toISOString())
-                date2 = formatDate(match.endTime.toISOString())
-            })
-
-            console.log('---', date1, '---', date2)
-
+      
             res.render('match/match-list', { matches, date1, date2 })
 
         })
@@ -143,12 +138,16 @@ router.post('/match-details/:id/markWinnersA', (req, res, next) => {
 
     Match
         .findById(id)
-        .then(({ teamA }) => {
-
-            const playersIncrement = teamA.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { wins: 1 } }))
-            return Promise.all(playersIncrement)
+        .then(({ teamA, teamB }) => {
+            const playersWinIncrement = teamA.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { wins: 1 } }))
+            Promise.all(playersWinIncrement)
+            return teamB
         })
-        .then(res.redirect('/matches'))
+        .then((teamB) => {
+            const playersLoseIncrement = teamB.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { loses: 1 } }))
+            Promise.all(playersLoseIncrement)
+            res.redirect('/matches')
+        })
         .catch(err => console.log(err))
 
 })
@@ -159,48 +158,21 @@ router.post('/match-details/:id/markWinnersB', (req, res, next) => {
 
     Match
         .findById(id)
-        .then(({ teamB }) => {
-
-            const playersIncrement = teamB.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { wins: 1 } }))
-            return Promise.all(playersIncrement)
+        .then(({ teamA, teamB }) => {
+            const playersWinIncrement = teamB.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { wins: 1 } }))
+            Promise.all(playersWinIncrement)
+            return teamA
         })
-        .then(res.redirect('/matches'))
+        .then((teamA) => {
+            console.log(id)
+            const playersLoseIncrement = teamA.map(eachPlayer => User.findByIdAndUpdate(eachPlayer, { $inc: { loses: 1 } }))
+            const matchDelete = Match.findByIdAndDelete(id)
+            Promise.all([playersLoseIncrement, matchDelete])
+            res.redirect('/matches')
+        })
         .catch(err => console.log(err))
 
 })
 
-// router.post('/match-details/:id/markLosersA', (req, res, next) => {
-
-
-//     const { id } = req.params
-//     let teamAPlayers
-
-//     Match
-//         .findById(id)
-//         .then(match => {
-//             teamAPlayers = match.teamA
-//             return User.find({ teamAPlayers }).updateMany({ $inc: { loses: 1 } })
-//         })
-//         .then(() => {
-//             res.redirect('/matches')
-//         })
-// })
-
-// router.post('/match-details/:id/markLosersB', (req, res, next) => {
-
-
-//     const { id } = req.params
-//     let teamBPlayers
-
-//     Match
-//         .findById(id)
-//         .then(match => {
-//             teamBPlayers = match.teamB
-//             return User.find({ teamBPlayers }).updateMany({ $inc: { loses: 1 } })
-//         })
-//         .then(() => {
-//             res.redirect('/matches')
-//         })
-// })
 
 module.exports = router
