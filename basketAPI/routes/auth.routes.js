@@ -2,7 +2,6 @@ const router = require("express").Router()
 const bcryptjs = require('bcryptjs')
 const User = require("../models/User.model")
 const saltRounds = 10
-
 const { isLoggedIn } = require("../middleware/route-guard")
 
 router.get('/register', isLoggedIn, (req, res, next) => res.render('auth/sign-up'))
@@ -20,6 +19,7 @@ router.post('/register', isLoggedIn, (req, res, next) => {
 })
 
 router.get('/login', isLoggedIn, (req, res, next) => res.render('auth/login'))
+
 router.post('/login', (req, res, next) => {
 
     const { email, plainPassword } = req.body

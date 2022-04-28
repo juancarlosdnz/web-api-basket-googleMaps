@@ -1,28 +1,36 @@
 <div class="container">
     <h1>Pefil de {{user.username}}</h1>
-    <p>Email: {{user.email}}</p>
-    <figure>
-        <img src={{user.profileImg}} alt="Imagen de perfil de {{user.username}}">
-    </figure>
-    <p>Estatus: {{role}}</p>
-    <p>Número de teléfono: {{user.phoneNumber}}</p>
-    <h3>Comentarios</h3>
-    <hr>
-    {{#each comments}}
-    <p>{{comment}}</p>
-    <p>Autor: {{author.username}}</p>
-    <form action="/users/{{user._id}}/comment/{{this._id}}/delete" method="POST">
-        <div>
-            <button type="submit" class="btn btn-dark block">ELIMINAR COMENTARIO</button>
+
+    <div class="row">
+        <div class="col-md-6">
+            <figure>
+                <img src={{user.profileImg}} alt="Imagen de perfil de {{user.username}}">
+            </figure>
         </div>
-    </form>
-    <hr>
-    {{/each}}
-    <form action="/users/{{user._id}}/comment" method="POST">
-        <textarea name="comment" id="comment" cols="50" rows="10"></textarea>
-        <div>
-            <button type="submit" class="btn btn-dark block">Comentar</button>
+        <div class="col-md-6">
+            <p>Email: {{user.email}}</p>
+
+            <p>Estatus: {{role}}</p>
+            <p>Número de teléfono: {{user.phoneNumber}}</p>
+            <h3>Comentarios</h3>
+            <hr>
+            {{#each comments}}
+            <p>{{comment}}</p>
+            <i>Comentario de: {{author.username}}</i>
+            <form action="/users/{{user._id}}/comment/{{this._id}}/delete" method="POST">
+                <div>
+                    <button type="submit" class="btn btn-dark block">ELIMINAR COMENTARIO</button>
+                </div>
+            </form>
+            <hr>
+            {{/each}}
+            <form action="/users/{{user._id}}/comment" method="POST">
+                <textarea name="comment" id="comment" cols="50" rows="10"></textarea>
+                <div>
+                    <button type="submit" class="btn btn-dark block">Comentar</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 
 </div>

@@ -11,9 +11,11 @@
             <h3>Equipos:</h3>
             <div class="teams">
                 <p>TEAM A</p>
+                {{#if ../isOrganizer}}
                 <form action="/matches/match-details/{{id}}/markWinnersA" method="POST">
                     <button type="submit" class="btn btn-warning">MARK AS WINNER</button>
                 </form>
+                {{/if}}
                 <form action="/matches/match-details/{{id}}/joinTeamA" method="POST">
                     <button type="submit" class="btn btn-warning">Unirse a Team A</button>
                 </form>
@@ -46,10 +48,12 @@
 
     <div class="buttons">
         <a href="/matches" class="btn btn-dark">Volver a lista de partidos</a>
+        {{#if ../isOrganizer}}
         <a href="/matches/match-details/{{id}}/edit" class="btn btn-dark">Editar partido</a>
         <form action="/matches/match-details/{{id}}/delete" method="POST">
             <button type="submit" class="btn btn-warning">Eliminar</button>
         </form>
+        {{/if}}
     </div>
 
 </div>

@@ -5,7 +5,7 @@ const { isLoggedOut } = require('../middleware/route-guard')
 
 router.get('/', isLoggedOut, (req, res, next) => {
 
-    const loggedId = req.session.currentUser._id
+    const { _id: loggedId } = req.session.currentUser
     const isAdmin = req.session.currentUser.role === 'ADMIN'
 
     User
@@ -19,6 +19,7 @@ router.get('/', isLoggedOut, (req, res, next) => {
 router.get('/:id/edit', (req, res, next) => {
 
     const { id } = req.params
+
     User
         .findById(id)
         .then(user => {

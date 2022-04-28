@@ -17,13 +17,18 @@ router.get('/', isLoggedOut, (req, res, next) => {
 router.get('/:id', isLoggedOut, (req, res, next) => {
 
     const { id } = req.params
+
     const userPromise = User.findById(id)
     const commentPromise = Comment.find({ user: id }).populate('author')
 
     Promise
         .all([userPromise, commentPromise])
         .then(([user, comments]) => {
-            res.render('users/profile', { user, comments })
+            if (req.session.currentUser._id === id) {
+                res.redirect('/profile')
+            } else {
+                res.render('users/profile', { user, comments })
+            }
         })
         .catch(err => console.log(err))
 })

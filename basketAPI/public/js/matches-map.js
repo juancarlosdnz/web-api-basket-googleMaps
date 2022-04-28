@@ -10,7 +10,7 @@ function initMap() {
 }
 
 function drawMap() {
-    const { Map,Marker } = google.maps
+    const { Map, Marker } = google.maps
 
     map = new Map(
         document.getElementById('myMap'),
@@ -25,11 +25,11 @@ function selectMatchPlace() {
     google.maps.event.addListener(map, 'click', function (event) {
         centerLat = document.getElementById("lat").value = event.latLng.lat();
         centerLng = document.getElementById("lng").value = event.latLng.lng();
-        placeMatchMarkers(centerLat,centerLng)
+        placeMatchMarkers(centerLat, centerLng)
     })
 }
 
-function placeMatchMarkers(centerLat,centerLng) {
+function placeMatchMarkers(centerLat, centerLng) {
     deleteMarkers()
 
     const { Marker } = google.maps

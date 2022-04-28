@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const Match = require('./../models/Match.model')
 const User = require('./../models/User.model')
-
 const mongoose = require('mongoose');
 const { isLoggedOut, checkRole } = require("../middleware/route-guard")
 const formatDate = require('./../utils/formatDate')
@@ -15,6 +14,9 @@ router.get('/', isLoggedOut, (req, res, next) => {
                 date1 = formatDate(match.startTime.toISOString())
                 date2 = formatDate(match.endTime.toISOString())
             })
+
+            console.log('---', date1, '---', date2)
+
             res.render('match/match-list', { matches, date1, date2 })
 
         })
@@ -24,6 +26,9 @@ router.get('/', isLoggedOut, (req, res, next) => {
 router.get('/match-details/:id', (req, res, next) => {
 
     const { id } = req.params
+    const isOrganizer = req.session.currentUser.role === 'ORGANIZER'
+
+    console.log('------' + req.session.currentUser.role)
 
     Match
         .findById(id)
@@ -33,12 +38,12 @@ router.get('/match-details/:id', (req, res, next) => {
         .then(match => {
             date1 = formatDate(match.startTime.toISOString())
             date2 = formatDate(match.endTime.toISOString())
-            res.render('match/match-detail', { match, date1, date2 })
+            res.render('match/match-detail', { match, date1, date2, isOrganizer })
         })
         .catch(err => console.log(err))
 })
 
-router.get('/create', isLoggedOut, checkRole('ORGANIZER'), (req, res, next) => {
+router.get('/create', isLoggedOut, checkRole('ORGANIZER', 'ADMIN'), (req, res, next) => {
     res.render('match/match-create')
 })
 
@@ -76,6 +81,8 @@ router.get('/match-details/:id/edit', (req, res, next) => {
         .populate('teamA')
         .populate('teamB')
         .then(match => {
+
+            // const [statrtTimeFmt, endTimeFmt] = formatMatchDates(match)
             date1 = formatDate(match.startTime.toISOString())
             date2 = formatDate(match.endTime.toISOString())
             res.render('match/match-edit', { match, date1, date2 })

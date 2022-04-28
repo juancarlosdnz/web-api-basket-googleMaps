@@ -1,4 +1,4 @@
-const {Schema,model}=require('mongoose')
+const { Schema, model } = require('mongoose')
 const matchSchema = new Schema(
     {
         organizer: { type: Schema.Types.ObjectId, ref: 'User' },
